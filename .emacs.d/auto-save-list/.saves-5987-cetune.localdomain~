@@ -1,0 +1,14 @@
+/root/j2/src/librbd/ImageCtx.h
+/root/j2/src/librbd/#ImageCtx.h#
+/root/j2/src/librbd/ImageState.cc
+/root/j2/src/librbd/#ImageState.cc#
+/root/j2/src/librbd/librbd.cc
+/root/j2/src/librbd/#librbd.cc#
+/root/j2/src/librbd/internal.cc
+/root/j2/src/librbd/#internal.cc#
+/root/j2/src/librbd/ImageState.h
+/root/j2/src/librbd/#ImageState.h#
+/root/j2/src/librbd/librbd.h
+/root/j2/src/librbd/#librbd.h#
+/root/j2/src/tools/rbd/action/Feature.cc
+/root/j2/src/tools/rbd/action/#Feature.cc#

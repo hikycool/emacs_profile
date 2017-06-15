@@ -26,6 +26,12 @@
 (add-to-list 'custom-theme-load-path "~/.emacs.d/theme")
 
 (load-theme 'adwaita t)
+
+
+;; cancel welcome page
+(setq inhibit-splash-screen t)
+
+
 ;;------------------------------------------------
 
 ;;------------------------font-------------------------

@@ -4,7 +4,7 @@
 ;; just comment it out by adding a semicolon to the start of the line.
 ;; You may delete these explanatory comments.
 (package-initialize)
-
+x
 (custom-set-variables
  ;; custom-set-variables was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -25,7 +25,7 @@
 
 (add-to-list 'custom-theme-load-path "~/.emacs.d/theme")
 
-(load-theme 'adwaita t)
+(load-theme 'wilson t)
 
 
 ;; cancel welcome page

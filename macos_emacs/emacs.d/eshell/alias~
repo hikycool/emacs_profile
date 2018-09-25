@@ -1,0 +1,6 @@
+alias clear aweshell-clear-buffer
+alias d dired $1
+alias fo find-file-other-window $1
+alias f find-file $1
+alias l ll $*
+alias ll ls -al

@@ -1,1 +1,3 @@
-# linux_emacs_profile
+# emacs_profile
+
+This branch is the lsp configuration for emacs

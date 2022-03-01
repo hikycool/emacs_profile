@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<libraryInfos>
+    <libraryInfo home="/Library/Java/JavaVirtualMachines/jdk-12.0.1.jdk/Contents/Home" version="12.0.1"/>
+    <libraryInfo home="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home" version="1.8.0_302">
+        <bootpath>
+            <entry path="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home/jre/lib/resources.jar"/>
+            <entry path="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home/jre/lib/rt.jar"/>
+            <entry path="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home/jre/lib/sunrsasign.jar"/>
+            <entry path="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home/jre/lib/jsse.jar"/>
+            <entry path="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home/jre/lib/jce.jar"/>
+            <entry path="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home/jre/lib/charsets.jar"/>
+            <entry path="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home/jre/lib/jfr.jar"/>
+            <entry path="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home/jre/classes"/>
+        </bootpath>
+        <extensionDirs>
+            <entry path="/Users/syu/Library/Java/Extensions"/>
+            <entry path="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home/jre/lib/ext"/>
+            <entry path="/Library/Java/Extensions"/>
+            <entry path="/Network/Library/Java/Extensions"/>
+            <entry path="/System/Library/Java/Extensions"/>
+            <entry path="/usr/lib/java"/>
+        </extensionDirs>
+        <endorsedDirs>
+            <entry path="/usr/local/Cellar/openjdk@8/1.8.0+302/libexec/openjdk.jdk/Contents/Home/jre/lib/endorsed"/>
+        </endorsedDirs>
+    </libraryInfo>
+    <libraryInfo home="/usr/local/Cellar/openjdk@11/11.0.10/libexec/openjdk.jdk/Contents/Home" version="11.0.10"/>
+    <libraryInfo home="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home" version="1.8.0_231">
+        <bootpath>
+            <entry path="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/resources.jar"/>
+            <entry path="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/rt.jar"/>
+            <entry path="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/sunrsasign.jar"/>
+            <entry path="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/jsse.jar"/>
+            <entry path="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/jce.jar"/>
+            <entry path="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/charsets.jar"/>
+            <entry path="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/jfr.jar"/>
+            <entry path="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/classes"/>
+        </bootpath>
+        <extensionDirs>
+            <entry path="/Users/syu/Library/Java/Extensions"/>
+            <entry path="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/ext"/>
+            <entry path="/Library/Java/Extensions"/>
+            <entry path="/Network/Library/Java/Extensions"/>
+            <entry path="/System/Library/Java/Extensions"/>
+            <entry path="/usr/lib/java"/>
+        </extensionDirs>
+        <endorsedDirs>
+            <entry path="/Library/Internet Plug-Ins/JavaAppletPlugin.plugin/Contents/Home/lib/endorsed"/>
+        </endorsedDirs>
+    </libraryInfo>
+    <libraryInfo home="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home" version="1.8.0_312">
+        <bootpath>
+            <entry path="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home/jre/lib/resources.jar"/>
+            <entry path="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home/jre/lib/rt.jar"/>
+            <entry path="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home/jre/lib/sunrsasign.jar"/>
+            <entry path="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home/jre/lib/jsse.jar"/>
+            <entry path="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home/jre/lib/jce.jar"/>
+            <entry path="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home/jre/lib/charsets.jar"/>
+            <entry path="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home/jre/lib/jfr.jar"/>
+            <entry path="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home/jre/classes"/>
+        </bootpath>
+        <extensionDirs>
+            <entry path="/Users/syu/Library/Java/Extensions"/>
+            <entry path="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home/jre/lib/ext"/>
+            <entry path="/Library/Java/Extensions"/>
+            <entry path="/Network/Library/Java/Extensions"/>
+            <entry path="/System/Library/Java/Extensions"/>
+            <entry path="/usr/lib/java"/>
+        </extensionDirs>
+        <endorsedDirs>
+            <entry path="/Users/syu/Library/Java/JavaVirtualMachines/corretto-1.8.0_312/Contents/Home/jre/lib/endorsed"/>
+        </endorsedDirs>
+    </libraryInfo>
+</libraryInfos>

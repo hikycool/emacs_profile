@@ -1,0 +1,238 @@
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("6b5c518d1c250a8ce17463b7e435e9e20faa84f3f7defba8b579d4f5925f60c1" "aca70b555c57572be1b4e4cec57bc0445dcb24920b12fb1fea5f6baa7f2cad02" "7661b762556018a44a29477b84757994d8386d6edee909409fabe0631952dad9" default))
+ '(helm-completion-style 'helm)
+ '(menu-bar-mode nil)
+ '(package-selected-packages
+   '(multi-vterm lsp-mode yasnippet lsp-treemacs helm-lsp projectile hydra flycheck company avy which-key helm-xref dap-mode))
+ '(scroll-bar-mode nil)
+ '(tool-bar-mode nil)
+ '(warning-suppress-log-types '((comp) (comp)))
+ '(warning-suppress-types '((comp))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(setq backup-directory-alist (quote (("." . "/home/syu/Zmacs/backup_file/"))))
+;; -------------- system setting ----------------------
+
+;; ----------------------------------------------------
+
+(add-to-list 'load-path "~/.emacs.d/packages/")
+(require 'package)
+(setq package-archives
+      '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+        ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+	("melpa-stable" . "https://stable.melpa.org/packages/")))
+;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+
+;;-----------------use package-----------------
+(when (not (package-installed-p 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+
+(eval-and-compile
+  (setq use-package-always-ensure t)    ; 不用每个包都手动添加:ensure t 关键字
+  (setq use-package-always-defer t)     ; 默认都是延时加载，不用每个包都手动添加:defer t 关键字
+  (setq use-package-always-demand nil)  ;
+  (setq use-package-expand-minimally t) ;
+  (setq use-package-verbose t)          ; 打印安装过程
+  )
+
+;;-----------------use package-----------------
+
+;;----------------------------------------------------
+
+;;------------------------theme-------------------------
+(use-package gruvbox-theme
+  :init(load-theme 'gruvbox-dark-hard t))
+
+;;------------------------theme-------------------------
+
+;;-----------------window-numbering-------------------
+;;(use-package window-numbering
+  ;;:config 
+  ;;:init(setq window-numbering-mode t)
+  ;;)
+(use-package window-numbering
+  :ensure t
+  :unless noninteractive
+  :demand t
+  )
+(require 'window-numbering)
+(setq window-numbering-assign-func
+      (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
+(window-numbering-mode t)
+
+;;------------------------font-------------------------
+ 
+;; Setting English Font
+(set-face-attribute
+ 'default nil :font "Hack 13")
+
+;; Setting Chinese Font
+;;(dolist (charset '(kana han symbol cjk-misc bopomofo))  
+;;  (set-fontset-font (frame-parameter nil 'font)  
+;;                    charset  
+;;                    (font-spec :family "Yuanti SC" :size 15)))
+;;-----------------------font end---------------------
+
+;;-----------------------Dashbaord--------------------
+(use-package dashboard)
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+(setq dashboard-banner-logo-title "Specified Coding Work by Syu")
+(setq dashboard-startup-banner "/home/syu/.emacs.d/logo/gruvbox_hard/logo_gruvbox_hard.png")
+;;-----------------------Dashbaord--------------------
+
+;; --------------- execute path from shell -----------
+(use-package exec-path-from-shell
+  :demand t
+  :config (when (memq window-system '(mac ns x))
+	    (exec-path-from-shell-initialize)))
+(exec-path-from-shell-initialize)
+;; ---------------------------------------------------
+;;---------------LSP---------------------------------
+
+(setq package-selected-packages '(lsp-mode yasnippet lsp-treemacs helm-lsp
+    projectile hydra flycheck company avy which-key helm-xref dap-mode))
+
+(when (cl-find-if-not #'package-installed-p package-selected-packages)
+  (package-refresh-contents)
+  (mapc #'package-install package-selected-packages))
+
+;; sample `helm' configuration use https://github.com/emacs-helm/helm/ for details
+(helm-mode)
+(require 'helm-xref)
+(define-key global-map [remap find-file] #'helm-find-files)
+(define-key global-map [remap execute-extended-command] #'helm-M-x)
+(define-key global-map [remap switch-to-buffer] #'helm-mini)
+
+(which-key-mode)
+(add-hook 'c-mode-hook 'lsp)
+(add-hook 'c++-mode-hook 'lsp)
+(add-hook 'go-mode-hook #'lsp-deferred)
+
+(setq gc-cons-threshold (* 1024 1024 1024)
+      read-process-output-max (* 1024 1024)
+      treemacs-space-between-root-nodes nil
+      company-idle-delay 0.0
+      company-minimum-prefix-length 1
+      lsp-idle-delay 0.5)  ;; clangd is fast
+
+(setq lsp-log-io nil)
+(setq lsp-lens-enable nil)
+
+;; ---- c/c++ ----------
+(with-eval-after-load 'lsp-mode
+  (add-hook 'lsp-mode-hook #'lsp-enable-which-key-integration)
+  (require 'dap-cpptools)
+  (yas-global-mode))
+
+(use-package ccls
+  :hook ((c-mode c++-mode objc-mode cuda-mode) .
+         (lambda () (require 'ccls) (lsp))))
+(setq ccls-executable "/usr/bin/ccls")
+(setq ccls-args '("--log-file=/tmp/ccls.log"))
+;; ---------------------
+
+;;-------------lsp go gopls-------------
+;; Set up before-save hooks to format buffer and add/delete imports.
+;; Make sure you don't have other gofmt/goimports hooks enabled.
+(use-package go-mode)
+(defun lsp-go-install-save-hooks ()
+  (add-hook 'before-save-hook #'lsp-format-buffer t t)
+  (add-hook 'before-save-hook #'lsp-organize-imports t t))
+(add-hook 'go-mode-hook #'lsp-go-install-save-hooks)
+
+;; Start LSP Mode and YASnippet mode
+(add-hook 'go-mode-hook #'lsp-deferred)
+(add-hook 'go-mode-hook #'yas-minor-mode)
+;; --------------------------------------
+
+;; --------------- hot keys -----------------
+;; full screen
+(global-set-key (kbd "C-s-f") 'toggle-frame-fullscreen)
+
+;; --------------- hot keys -----------------
+
+;; --------------- yaml --------------------
+(use-package yaml-mode)
+(require 'yaml-mode)
+    (add-to-list 'auto-mode-alist '("\\.yml\\'" . yaml-mode))
+(add-hook 'yaml-mode-hook
+          (lambda ()
+            (define-key yaml-mode-map "\C-m" 'newline-and-indent)))
+;;-----------------yaml----------------------
+
+
+;;----------------LSP-Python-MS-------------
+(use-package lsp-python-ms
+  :ensure t
+  :init (setq lsp-python-ms-auto-install-server t)
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-python-ms)
+                          (lsp))))
+;;(require 'lsp-python-ms)
+;;(setq lsp-python-ms-auto-install-server t)
+;;(setq python-executable "/usr/bin/python3")
+(setq python-executable "/home/syu/python3.9/bin/python")
+;;(lsp-register-custom-settings
+;; '(("python.analysis.cachingLevel" "System")))
+(setq lsp-register-custom-settings
+      '(("python.analysis.logLevel" "Trace")))
+;;(setq lsp-python-ms-executable
+;;      "/home/syu/Code/python-language-server/output/bin/Release/linux-x64/publish/Microsoft.Python.LanguageServer")
+;;(add-hook 'python-mode-hook #'lsp)
+
+;;------------------------------------------
+
+;;----------------imenu--------------------
+(use-package imenu)
+;;-----------------------------------------
+
+;;---------------JAVA---------------------
+(use-package lsp-ui)
+(use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
+(use-package lsp-java
+  :after lsp-mode
+  :if (executable-find "mvn")
+  :init (use-package request :defer t)
+  :config (add-hook 'java-mode-hook 'lsp)
+  :custom
+  (lsp-java-server-install-dir (expand-file-name "/home/syu/.emacs.d/eclipse.jdt.ls/server/"))
+  (lsp-java-workspace-dir (expand-file-name "/home/syu/.emacs.d/eclipse.jdt.ls/workspace/")))
+(use-package dap-mode :after lsp-mode :config (dap-auto-configure-mode))
+(use-package dap-java :ensure nil)
+
+(require 'lsp-java)
+(require 'lsp-java-boot)
+;; to enable the lenses
+;;(add-hook 'lsp-mode-hook #'lsp-lens-mode)
+;;(add-hook 'java-mode-hook #'lsp-java-boot-lens-mode)
+;;(require 'lsp-java-boot)
+;;(add-hook 'java-mode-hook #'lsp)
+;;(setq lsp-java-java-path "/usr/local/opt/openjdk@11/libexec/openjdk.jdk/Contents/Home/bin/java")
+(setq lsp-java-java-path "/usr/bin/java")
+;;(require 'lsp-java-boot)
+;; to enable the lenses
+;;(add-hook 'lsp-mode-hook #'lsp-lens-mode)
+;;(add-hook 'java-mode-hook #'lsp-java-boot-lens-mode)
+;;---------------JAVA---------------------
+
+;;---------------Vterm--------------------
+(use-package vterm
+  :ensure t)
+(use-package multi-vterm
+  :ensure t)
+(setq shell-file-name (executable-find "/usr/bin/zsh"))
+;;---------------Vterm--------------------

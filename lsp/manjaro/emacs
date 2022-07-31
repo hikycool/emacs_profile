@@ -11,8 +11,8 @@
    '(multi-vterm lsp-mode yasnippet lsp-treemacs helm-lsp projectile hydra flycheck company avy which-key helm-xref dap-mode))
  '(scroll-bar-mode nil)
  '(tool-bar-mode nil)
- '(warning-suppress-log-types '((comp) (comp)))
- '(warning-suppress-types '((comp))))
+ '(warning-suppress-log-types '((lsp-mode) (comp)))
+ '(warning-suppress-types '((lsp-mode) (comp))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
@@ -101,7 +101,7 @@
 	    (exec-path-from-shell-initialize)))
 (exec-path-from-shell-initialize)
 ;; ---------------------------------------------------
-;;---------------LSP---------------------------------
+
 
 (setq package-selected-packages '(lsp-mode yasnippet lsp-treemacs helm-lsp
     projectile hydra flycheck company avy which-key helm-xref dap-mode))
@@ -110,6 +110,7 @@
   (package-refresh-contents)
   (mapc #'package-install package-selected-packages))
 
+;; ------------------------helm----------------------
 ;; sample `helm' configuration use https://github.com/emacs-helm/helm/ for details
 (helm-mode)
 (require 'helm-xref)
@@ -118,8 +119,11 @@
 (define-key global-map [remap switch-to-buffer] #'helm-mini)
 
 (which-key-mode)
-(add-hook 'c-mode-hook 'lsp)
-(add-hook 'c++-mode-hook 'lsp)
+;; ------------------------helm-------------------------
+
+;;---------------LSP---------------------------------
+;;(add-hook 'c-mode-hook 'lsp)
+;;(add-hook 'c++-mode-hook 'lsp)
 (add-hook 'go-mode-hook #'lsp-deferred)
 
 (setq gc-cons-threshold (* 1024 1024 1024)
@@ -201,7 +205,21 @@
 ;;-----------------------------------------
 
 ;;---------------JAVA---------------------
-(use-package lsp-ui)
+(use-package lsp-ui
+  :config
+  (setq lsp-prefer-flymake nil
+	lsp-ui-doc-deplay 1.0
+	lsp-ui-sideline-enable t
+	lsp-ui-sideline-show-symbol nil
+	lsp-ui-doc-enable t
+	lsp-ui-show-with-cursor t))
+;;(define-key lsp-mode-map (kbd "C-x M-,") #'lsp-ui-peek-find-references)
+;;(define-key lsp-mode-map (kbd "C-x M-.") #'lsp-ui-peek-find-definitions)
+(use-package treemacs
+  :init
+  (add-hook 'treemacs-mode-hook
+	    (lambda () (treemacs-resize-icons 15))))
+
 (use-package lsp-java :config (add-hook 'java-mode-hook 'lsp))
 (use-package lsp-java
   :after lsp-mode
@@ -211,6 +229,7 @@
   :custom
   (lsp-java-server-install-dir (expand-file-name "/home/syu/.emacs.d/eclipse.jdt.ls/server/"))
   (lsp-java-workspace-dir (expand-file-name "/home/syu/.emacs.d/eclipse.jdt.ls/workspace/")))
+
 (use-package dap-mode :after lsp-mode :config (dap-auto-configure-mode))
 (use-package dap-java :ensure nil)
 

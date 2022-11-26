@@ -314,6 +314,7 @@
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 ;;-----------------------------------------------------------
 ;;--------------------- helm ag -----------------------------
+;; sudo apt-get install silversearcher-ag
 (use-package helm-ag
   :ensure t
   :bind

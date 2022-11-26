@@ -1,0 +1,324 @@
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("6b5c518d1c250a8ce17463b7e435e9e20faa84f3f7defba8b579d4f5925f60c1" "aca70b555c57572be1b4e4cec57bc0445dcb24920b12fb1fea5f6baa7f2cad02" "7661b762556018a44a29477b84757994d8386d6edee909409fabe0631952dad9" default))
+ '(helm-completion-style 'helm)
+ '(menu-bar-mode nil)
+ '(package-selected-packages
+   '(helm-ag lsp-mode yasnippet lsp-treemacs helm-lsp projectile hydra flycheck company avy which-key helm-xref dap-mode))
+ '(scroll-bar-mode nil)
+ '(tool-bar-mode nil)
+ '(warning-suppress-log-types '((lsp-mode) (comp)))
+ '(warning-suppress-types '((lsp-mode) (comp))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(setq backup-directory-alist (quote (("." . "/home/syu/Zmacs/backup_file/"))))
+;; -------------- system setting ----------------------
+
+;; ----------------------------------------------------
+
+(add-to-list 'load-path "~/.emacs.d/packages/")
+(require 'package)
+(setq package-archives
+      '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+        ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+	("melpa-stable" . "https://stable.melpa.org/packages/")))
+;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+
+;;-----------------use package-----------------
+(when (not (package-installed-p 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+
+(eval-and-compile
+  (setq use-package-always-ensure t)    ; 不用每个包都手动添加:ensure t 关键字
+  (setq use-package-always-defer t)     ; 默认都是延时加载，不用每个包都手动添加:defer t 关键字
+  (setq use-package-always-demand nil)  ;
+  (setq use-package-expand-minimally t) ;
+  (setq use-package-verbose t)          ; 打印安装过程
+  )
+
+;;-----------------use package-----------------
+
+;;----------------------------------------------------
+
+;;------------------------theme-------------------------
+(use-package gruvbox-theme
+  :init(load-theme 'gruvbox-dark-hard t))
+
+;;------------------------theme-------------------------
+
+;;-----------------window-numbering-------------------
+;;(use-package window-numbering
+  ;;:config 
+  ;;:init(setq window-numbering-mode t)
+  ;;)
+(use-package window-numbering
+  :ensure t
+  :unless noninteractive
+  :demand t
+  )
+(require 'window-numbering)
+(setq window-numbering-assign-func
+      (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
+(window-numbering-mode t)
+
+;;------------------------font-------------------------
+ 
+;; Setting English Font
+(set-face-attribute
+ 'default nil :font "Ubuntu Mono 16")
+
+;; Setting Chinese Font
+;;(dolist (charset '(kana han symbol cjk-misc bopomofo))  
+;;  (set-fontset-font (frame-parameter nil 'font)  
+;;                    charset  
+;;                    (font-spec :family "Yuanti SC" :size 15)))
+;;-----------------------font end---------------------
+
+;;-----------------------Dashbaord--------------------
+(use-package dashboard)
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+(setq dashboard-banner-logo-title "Specified Coding Work by Syu")
+(setq dashboard-startup-banner "/home/syu/.emacs.d/logo/gruvbox_hard/logo_gruvbox_hard.png")
+;;-----------------------Dashbaord--------------------
+
+;; --------------- execute path from shell -----------
+(use-package exec-path-from-shell
+  :demand t
+  :config (when (memq window-system '(mac ns x))
+	    (exec-path-from-shell-initialize)))
+(exec-path-from-shell-initialize)
+;; ---------------------------------------------------
+
+
+(setq package-selected-packages '(lsp-mode yasnippet lsp-treemacs helm-lsp
+    projectile hydra flycheck company avy which-key helm-xref dap-mode))
+
+(when (cl-find-if-not #'package-installed-p package-selected-packages)
+  (package-refresh-contents)
+  (mapc #'package-install package-selected-packages))
+
+;; ------------------------helm----------------------
+;; sample `helm' configuration use https://github.com/emacs-helm/helm/ for details
+(helm-mode)
+(require 'helm-xref)
+(define-key global-map [remap find-file] #'helm-find-files)
+(define-key global-map [remap execute-extended-command] #'helm-M-x)
+(define-key global-map [remap switch-to-buffer] #'helm-mini)
+
+(which-key-mode)
+;; ------------------------helm-------------------------
+
+;; --------------- hot keys -----------------
+;; full screen
+(global-set-key (kbd "C-s-f") 'toggle-frame-fullscreen)
+(global-set-key (kbd "C-M-f") 'toggle-frame-fullscreen)
+(global-set-key (kbd "C-x M-.") 'lsp-bridge-find-def)
+(global-set-key (kbd "C-x M-,") 'lsp-bridge-find-def-return)
+(global-set-key (kbd "C-x M-?") 'lsp-bridge-find-references)
+(global-set-key (kbd "C-x M-l") 'imenu-list-smart-toggle)
+;; (global-set-key (kbd "C-x M-t") 'treemacs)
+
+;; --------------- hot keys -----------------
+
+;;----------------imenu--------------------
+(use-package imenu)
+;;-----------------------------------------
+
+;;---------------Vterm--------------------
+(use-package vterm
+  :ensure t)
+(use-package multi-vterm
+  :ensure t)
+(setq shell-file-name (executable-find "/usr/bin/zsh"))
+;;---------------Vterm--------------------
+
+;;---------------Eglot--------------------
+(use-package eglot
+  :config
+  (add-to-list 'eglot-server-programs '((c-mode c++-mode) . ("ccls")))
+  ;; (add-to-list 'eglot-server-programs '((python-mode) . ("pylsp")))
+  ;;(add-hook 'c-mode-hook 'eglot-ensure)
+  ;;(add-hook 'c++-mode-hook 'eglot-ensure)
+  ;;(add-hook 'python-mode-hook 'eglot-ensure)
+)
+
+(use-package company
+  :after eglot
+  :hook (eglot-managed-mode . company-mode)
+)
+
+;;--------------------------------------------------
+
+;;---------------------Bridge-----------------------
+;;(add-to-list 'load-path "/home/syu/Code/lsp-bridge")
+(add-to-list 'load-path "/home/syu/Zmacs/lsp-bridge")
+(use-package posframe)
+(use-package markdown-mode)
+(use-package yasnippet)
+(require 'yasnippet)
+(yas-global-mode 1)
+
+(require 'lsp-bridge)
+(global-lsp-bridge-mode)
+(setq lsp-bridge-c-lsp-server "ccls")
+;;(setq lsp-bridge-enable-log t)
+;;(setq lsp-bridge-enable-debug t)
+;;--------------------------------------------------
+
+;;----------------------Tramp-----------------------
+(setq tramp-default-method "ssh")
+(setq directory-abbrev-alist '(("^/udev" . "/ssh:syu@udev:/home/syu/code/lsp-bridge/grpc_server")
+			       ("^/rdev" . "/ssh:syu@udev:/home/syu/code/redis/src")))
+(setq tramp-use-ssh-controlmaster-options nil)
+(setq recentf-exclude `(,tramp-file-name-regexp
+			"COMMIT_EDIMSG")
+      tramp-auto-save-directory temporary-file-directory
+      backup-directory-alist (list (cons tramp-file-name-regexp nil)))
+(defun my/project-remember-advice (fn pr &optional no-write)
+  (let* ((remote? (file-remote-p (project-root pr)))
+	 (no-write (if remote? t no-write)))
+    (funcall fn pr no-write)))
+(advice-add 'project-remember-project :around
+	    'my/project-remember-advice)
+;;----------------------------------------------------
+
+;;-------------protobuf----------------
+(use-package protobuf-mode
+  :ensure t)
+;;-----------------------------------------
+
+;;------------- mode line ------------------
+(use-package all-the-icons
+  :if (display-graphic-p))
+(use-package doom-modeline
+  :ensure t
+  :init (doom-modeline-mode 1))
+(setq doom-modeline-support-imenu t)
+;;------------- mode line ------------------
+;;------------- treemacs ----------------------
+(use-package treemacs
+  :ensure t
+  :defer t
+  :init
+  (with-eval-after-load 'winum
+    (define-key winum-keymap (kbd "M-0") #'treemacs-select-window))
+  :config
+  (progn
+    (setq treemacs-collapse-dirs                 (if treemacs-python-executable 3 0)
+          treemacs-deferred-git-apply-delay      0.5
+          treemacs-directory-name-transformer    #'identity
+          treemacs-display-in-side-window        t
+          treemacs-eldoc-display                 t
+          treemacs-file-event-delay              5000
+          treemacs-file-extension-regex          treemacs-last-period-regex-value
+          treemacs-file-follow-delay             0.2
+          treemacs-file-name-transformer         #'identity
+          treemacs-follow-after-init             t
+          treemacs-git-command-pipe              ""
+          treemacs-goto-tag-strategy             'refetch-index
+          treemacs-indentation                   2
+          treemacs-indentation-string            " "
+          treemacs-is-never-other-window         nil
+          treemacs-max-git-entries               5000
+          treemacs-missing-project-action        'ask
+          treemacs-no-png-images                 nil
+          treemacs-no-delete-other-windows       t
+          treemacs-project-follow-cleanup        nil
+          treemacs-persist-file                  (expand-file-name ".cache/treemacs-persist" user-emacs-directory)
+          treemacs-position                      'left
+          treemacs-recenter-distance             0.1
+          treemacs-recenter-after-file-follow    nil
+          treemacs-recenter-after-tag-follow     nil
+          treemacs-recenter-after-project-jump   'always
+          treemacs-recenter-after-project-expand 'on-distance
+          treemacs-show-cursor                   nil
+          treemacs-show-hidden-files             t
+          treemacs-silent-filewatch              nil
+          treemacs-silent-refresh                nil
+          treemacs-sorting                       'alphabetic-asc
+          treemacs-space-between-root-nodes      t
+          treemacs-tag-follow-cleanup            t
+          treemacs-tag-follow-delay              1.5
+          treemacs-user-mode-line-format         nil
+          treemacs-width                         35
+	  treemacs-load-theme                    "all-the-icons")
+
+    ;; The default width and height of the icons is 22 pixels. If you are
+    ;; using a Hi-DPI display, uncomment this to double the icon size.
+    ;;(treemacs-resize-icons 44)
+
+    (treemacs-follow-mode t)
+    (treemacs-filewatch-mode t)
+    (treemacs-fringe-indicator-mode t)
+    (pcase (cons (not (null (executable-find "git")))
+                 (not (null treemacs-python-executable)))
+      (`(t . t)
+       (treemacs-git-mode 'deferred))
+      (`(t . _)
+       (treemacs-git-mode 'simple))))
+  :bind
+  (:map global-map
+        ("M-0"       . treemacs-select-window)
+        ("C-x t 1"   . treemacs-delete-other-windows)
+        ("C-x t t"   . treemacs)
+        ("C-x t B"   . treemacs-bookmark)
+        ("C-x t C-t" . treemacs-find-file)
+        ("C-x t M-t" . treemacs-find-tag)))
+
+(require 'treemacs-all-the-icons)
+(treemacs-load-theme "all-the-icons")
+
+(use-package treemacs-projectile
+  :after treemacs projectile
+  :ensure t)
+
+(use-package treemacs-icons-dired
+  :after treemacs dired
+  :ensure t
+  :config (treemacs-icons-dired-mode))
+
+(use-package treemacs-magit
+  :after treemacs magit
+  :ensure t)
+
+(use-package treemacs-persp
+  :after treemacs persp-mode
+  :ensure t
+  :config (treemacs-set-scope-type 'Perspectives))
+;;-------------- treemacs ---------------------
+;; ------------- Rainbow -----------------------------------------
+(use-package rainbow-mode)
+(add-hook 'prog-mode-hook 'rainbow-mode)
+(use-package rainbow-delimiters)
+(add-hook 'prog-mode-hook 'rainbow-delimiters-mode)
+;;---------------------------------------------------------------
+;;------------------- Tree sitter --------------------------
+(use-package tree-sitter)
+(use-package tree-sitter-langs)
+(require 'tree-sitter)
+(require 'tree-sitter-langs)
+(global-tree-sitter-mode)
+(add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
+;;-----------------------------------------------------------
+;;--------------------- helm ag -----------------------------
+(use-package helm-ag
+  :ensure t
+  :bind
+  (:map global-map
+	("C-x a g" . helm-ag)
+	("C-x a d" . helm-do-ag)
+	))
+;;----------------------------------------------------------

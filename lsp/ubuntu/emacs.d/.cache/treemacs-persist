@@ -1,0 +1,5 @@
+* Default
+** redis
+ - path :: ~/Code/redis
+** lsp-bridge
+ - path :: ~/Zmacs/lsp-bridge

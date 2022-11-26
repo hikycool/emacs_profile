@@ -1,0 +1,19 @@
+HTTP/1.1 200 OK
+Connection: close
+Content-Length: 245
+Last-Modified: Thu, 18 Feb 2021 18:33:19 GMT
+ETag: "cb0b17537194c77c2e788e803b548863"
+Content-Type: image/svg+xml
+Server: AmazonS3
+Via: 1.1 varnish, 1.1 varnish
+Accept-Ranges: bytes
+Date: Sat, 26 Nov 2022 00:08:33 GMT
+Age: 2102
+X-Served-By: cache-iad-kiad7000176-IAD, cache-hkg17934-HKG
+X-Cache: HIT, HIT
+X-Cache-Hits: 2, 1
+Access-Control-Allow-Origin: *
+Strict-Transport-Security: max-age=31536000
+X-Fastly-Request-ID: a6d2d916037a3b3eddd40e89f8850f524fda9d9b
+
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 19 18"><path d="M3.94 2A2 2 0 1 1 2 0a2 2 0 0 1 1.94 2zM4 5.48H0V18h4zm6.32 0H6.34V18h3.94v-6.57c0-3.66 4.77-4 4.77 0V18H19v-7.93c0-6.17-7.06-5.94-8.72-2.91z" fill="rgb(149, 157, 165)"/></svg>

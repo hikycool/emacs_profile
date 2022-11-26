@@ -1,0 +1,14 @@
+/ssh:syu@udev:/home/syu/code/lsp-bridge/grpc_server/agent_proxy.py
+/tmp/#_assh_bsyu@udev_b_ahome_asyu_acode_alsp-bridge_agrpc__server_aagent__proxy.py#
+/ssh:syu@udev:/home/syu/code/lsp-bridge/grpc_server/lsp_file_operator.py
+/tmp/#_assh_bsyu@udev_b_ahome_asyu_acode_alsp-bridge_agrpc__server_alsp__file__operator.py#
+/ssh:syu@udev:/home/syu/code/lsp-bridge/grpc_server/lsp_agent.py
+/tmp/#_assh_bsyu@udev_b_ahome_asyu_acode_alsp-bridge_agrpc__server_alsp__agent.py#
+/ssh:syu@udev:/home/syu/code/lsp-bridge/grpc_server/grpc_server.py
+/tmp/#_assh_bsyu@udev_b_ahome_asyu_acode_alsp-bridge_agrpc__server_agrpc__server.py#
+/ssh:syu@udev:/home/syu/code/lsp-bridge/core/utils.py
+/tmp/#_assh_bsyu@udev_b_ahome_asyu_acode_alsp-bridge_acore_autils.py#
+/ssh:syu@udev:/home/syu/code/lsp-bridge/lsp_bridge.py
+/tmp/#_assh_bsyu@udev_b_ahome_asyu_acode_alsp-bridge_alsp__bridge.py#
+/ssh:syu@udev:/home/syu/code/lsp-bridge/grpc_server/grpc_client_v1.py
+/tmp/#_assh_bsyu@udev_b_ahome_asyu_acode_alsp-bridge_agrpc__server_agrpc__client__v1.py#

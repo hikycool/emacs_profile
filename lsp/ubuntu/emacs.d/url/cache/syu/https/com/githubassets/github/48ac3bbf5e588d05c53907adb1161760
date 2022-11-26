@@ -1,0 +1,22 @@
+HTTP/1.1 200 OK
+Connection: close
+Content-Length: 1003
+Access-Control-Allow-Methods: GET
+Access-Control-Max-Age: 3600
+Last-Modified: Mon, 21 Sep 2020 17:43:28 GMT
+ETag: "0f99d90bd68043a5def80515ad2195e0"
+Content-Type: image/svg+xml
+Server: AmazonS3
+Via: 1.1 varnish, 1.1 varnish
+Accept-Ranges: bytes
+Date: Sat, 26 Nov 2022 00:08:57 GMT
+Age: 1444
+X-Served-By: cache-iad-kcgs7200091-IAD, cache-hkg17930-HKG
+X-Cache: HIT, HIT
+X-Cache-Hits: 28, 2
+Vary: Origin, Access-Control-Request-Headers, Access-Control-Request-Method
+Access-Control-Allow-Origin: *
+Strict-Transport-Security: max-age=31536000
+X-Fastly-Request-ID: ec90e79e4250a532ecd7fdc88e14c637ccd147ad
+
+<svg fill="none" height="908" viewBox="0 0 1050 908" width="1050" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink"><filter id="a" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse" height="746.377" width="990.651" x="58.8525" y="85.4978"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" mode="normal" result="shape"/><feGaussianBlur result="effect1_foregroundBlur" stdDeviation="60.7519"/></filter><linearGradient id="b" gradientUnits="userSpaceOnUse" x1="740.198" x2="302.599" y1="304.123" y2="716.851"><stop offset="0" stop-color="#ff7170"/><stop offset="1" stop-color="#c2a0fd"/></linearGradient><g filter="url(#a)" opacity=".6"><path d="m180.356 333.656c55.778 2.783 215.724 48.696 371.026 28.61 198.887-25.724 376.618-204.266 376.618-142.266 0 216-465.408 496.614-592.618 490.266-127.211-6.349 4.554-156.213 18.407-263.425 13.852-107.212-71.501-68.879-173.433-113.185z" fill="url(#b)"/></g></svg>

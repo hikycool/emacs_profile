@@ -1,0 +1,24 @@
+;; Emacs-W3 HTTP cookies file
+;; Automatically generated file!!! DO NOT EDIT!!!
+
+(setq url-cookie-storage
+ '((".google.com"
+  [url-cookie "NID" "511=fnCOqD_4xYsHLSWAg8gwNyh7DZ08ZSe4K6E3tnetK5N7sOzqMc6EKr7BUBWijIrn6yOxSHmHVd5pY3LVYJnhETWJkuRpYtpGCtKSEwDIlfRI3k6QLLS_UVcIK0ppjJejlbeveN6_lG000wgfK7tnbOB4Md1GWKBk1VAvuCthskk" "Sun, 28-May-2023 00:10:54 GMT" "/" ".google.com" nil])
+ (".redis.io"
+  [url-cookie "visid_incap_2333592" "hhNR4E7RT0uHYqun7KENWctYgWMAAAAAQUIPAAAAAABmLqMiXBYj1icP4iKksf6N" "Sat, 25 Nov 2023 22:46:51 GMT" "/" ".redis.io" nil]))
+)
+(setq url-cookie-secure-storage
+ '((".youtube.com"
+  [url-cookie "VISITOR_INFO1_LIVE" "GYZTkjH1WAE" "Thu, 25-May-2023 00:10:30 GMT" "/" ".youtube.com" t])
+ (".google.com"
+  [url-cookie "1P_JAR" "2022-11-26-00" "Mon, 26-Dec-2022 00:11:01 GMT" "/" ".google.com" t]
+  [url-cookie "AEC" "AakniGMM4n3DhDcUFbYnUpuAOMPMEp2CSL7JC7PcheId4wmNzEwtzXmpTms" "Thu, 25-May-2023 00:11:01 GMT" "/" ".google.com" t])
+ ("github.com"
+  [url-cookie "_octo" "GH1.1.1912344236.1669421304" "Sun, 26 Nov 2023 00:08:24 GMT" "/" "github.com" t]
+  [url-cookie "logged_in" "no" "Sun, 26 Nov 2023 00:08:24 GMT" "/" "github.com" t]))
+)
+
+;; Local Variables:
+;; version-control: never
+;; no-byte-compile: t
+;; End:

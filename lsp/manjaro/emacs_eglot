@@ -1,0 +1,157 @@
+(custom-set-variables
+ ;; custom-set-variables was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ '(custom-safe-themes
+   '("6b5c518d1c250a8ce17463b7e435e9e20faa84f3f7defba8b579d4f5925f60c1" "aca70b555c57572be1b4e4cec57bc0445dcb24920b12fb1fea5f6baa7f2cad02" "7661b762556018a44a29477b84757994d8386d6edee909409fabe0631952dad9" default))
+ '(helm-completion-style 'helm)
+ '(menu-bar-mode nil)
+ '(package-selected-packages
+   '(multi-vterm lsp-mode yasnippet lsp-treemacs helm-lsp projectile hydra flycheck company avy which-key helm-xref dap-mode))
+ '(scroll-bar-mode nil)
+ '(tool-bar-mode nil)
+ '(warning-suppress-log-types '((lsp-mode) (comp)))
+ '(warning-suppress-types '((lsp-mode) (comp))))
+(custom-set-faces
+ ;; custom-set-faces was added by Custom.
+ ;; If you edit it by hand, you could mess it up, so be careful.
+ ;; Your init file should contain only one such instance.
+ ;; If there is more than one, they won't work right.
+ )
+(setq backup-directory-alist (quote (("." . "/home/syu/Zmacs/backup_file/"))))
+;; -------------- system setting ----------------------
+
+;; ----------------------------------------------------
+
+(add-to-list 'load-path "~/.emacs.d/packages/")
+(require 'package)
+(setq package-archives
+      '(("gnu"   . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+        ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+	("melpa-stable" . "https://stable.melpa.org/packages/")))
+;;(add-to-list 'package-archives '("melpa" . "http://melpa.org/packages/") t)
+(package-initialize)
+
+;;-----------------use package-----------------
+(when (not (package-installed-p 'use-package))
+  (package-refresh-contents)
+  (package-install 'use-package))
+(require 'use-package)
+
+(eval-and-compile
+  (setq use-package-always-ensure t)    ; 不用每个包都手动添加:ensure t 关键字
+  (setq use-package-always-defer t)     ; 默认都是延时加载，不用每个包都手动添加:defer t 关键字
+  (setq use-package-always-demand nil)  ;
+  (setq use-package-expand-minimally t) ;
+  (setq use-package-verbose t)          ; 打印安装过程
+  )
+
+;;-----------------use package-----------------
+
+;;----------------------------------------------------
+
+;;------------------------theme-------------------------
+(use-package gruvbox-theme
+  :init(load-theme 'gruvbox-dark-hard t))
+
+;;------------------------theme-------------------------
+
+;;-----------------window-numbering-------------------
+;;(use-package window-numbering
+  ;;:config 
+  ;;:init(setq window-numbering-mode t)
+  ;;)
+(use-package window-numbering
+  :ensure t
+  :unless noninteractive
+  :demand t
+  )
+(require 'window-numbering)
+(setq window-numbering-assign-func
+      (lambda () (when (equal (buffer-name) "*Calculator*") 9)))
+(window-numbering-mode t)
+
+;;------------------------font-------------------------
+ 
+;; Setting English Font
+(set-face-attribute
+ 'default nil :font "Hack 13")
+
+;; Setting Chinese Font
+;;(dolist (charset '(kana han symbol cjk-misc bopomofo))  
+;;  (set-fontset-font (frame-parameter nil 'font)  
+;;                    charset  
+;;                    (font-spec :family "Yuanti SC" :size 15)))
+;;-----------------------font end---------------------
+
+;;-----------------------Dashbaord--------------------
+(use-package dashboard)
+(require 'dashboard)
+(dashboard-setup-startup-hook)
+(setq initial-buffer-choice (lambda () (get-buffer "*dashboard*")))
+(setq dashboard-banner-logo-title "Specified Coding Work by Syu")
+(setq dashboard-startup-banner "/home/syu/.emacs.d/logo/gruvbox_hard/logo_gruvbox_hard.png")
+;;-----------------------Dashbaord--------------------
+
+;; --------------- execute path from shell -----------
+(use-package exec-path-from-shell
+  :demand t
+  :config (when (memq window-system '(mac ns x))
+	    (exec-path-from-shell-initialize)))
+(exec-path-from-shell-initialize)
+;; ---------------------------------------------------
+
+
+(setq package-selected-packages '(lsp-mode yasnippet lsp-treemacs helm-lsp
+    projectile hydra flycheck company avy which-key helm-xref dap-mode))
+
+(when (cl-find-if-not #'package-installed-p package-selected-packages)
+  (package-refresh-contents)
+  (mapc #'package-install package-selected-packages))
+
+;; ------------------------helm----------------------
+;; sample `helm' configuration use https://github.com/emacs-helm/helm/ for details
+(helm-mode)
+(require 'helm-xref)
+(define-key global-map [remap find-file] #'helm-find-files)
+(define-key global-map [remap execute-extended-command] #'helm-M-x)
+(define-key global-map [remap switch-to-buffer] #'helm-mini)
+
+(which-key-mode)
+;; ------------------------helm-------------------------
+
+;; --------------- hot keys -----------------
+;; full screen
+(global-set-key (kbd "C-s-f") 'toggle-frame-fullscreen)
+
+;; --------------- hot keys -----------------
+
+;;----------------imenu--------------------
+(use-package imenu)
+;;-----------------------------------------
+
+;;---------------Vterm--------------------
+(use-package vterm
+  :ensure t)
+(use-package multi-vterm
+  :ensure t)
+(setq shell-file-name (executable-find "/usr/bin/zsh"))
+;;---------------Vterm--------------------
+
+;;---------------Eglot--------------------
+(use-package eglot
+  :config
+  (add-to-list 'eglot-server-programs '((c-mode c++-mode) . ("ccls")))
+  (add-to-list 'eglot-server-programs '((python-mode) . ("pylsp")))
+  (add-hook 'c-mode-hook 'eglot-ensure)
+  (add-hook 'c++-mode-hook 'eglot-ensure)
+  (add-hook 'python-mode-hook 'eglot-ensure)
+)
+
+(use-package company
+  :after eglot
+  :hook (eglot-managed-mode . company-mode)
+)
+
+;;--------------------------------------------------

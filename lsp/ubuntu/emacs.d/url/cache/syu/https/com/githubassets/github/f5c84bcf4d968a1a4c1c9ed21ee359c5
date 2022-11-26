@@ -1,0 +1,19 @@
+HTTP/1.1 200 OK
+Connection: close
+Content-Length: 318
+Last-Modified: Mon, 22 Aug 2022 19:15:39 GMT
+ETag: "a4a843f2fb9481138cb2c85431e1a179"
+Content-Type: image/svg+xml
+Server: AmazonS3
+Via: 1.1 varnish, 1.1 varnish
+Accept-Ranges: bytes
+Date: Sat, 26 Nov 2022 00:08:33 GMT
+Age: 1853
+X-Served-By: cache-iad-kcgs7200036-IAD, cache-hkg17932-HKG
+X-Cache: HIT, HIT
+X-Cache-Hits: 3, 22
+Access-Control-Allow-Origin: *
+Strict-Transport-Security: max-age=31536000
+X-Fastly-Request-ID: 9b912cd83b1ef6c6139523a20481e4fd6503fafe
+
+<svg role="img" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><title>Twitch</title><path d="M11.571 4.714h1.715v5.143H11.57zm4.715 0H18v5.143h-1.714zM6 0L1.714 4.286v15.428h5.143V24l4.286-4.286h3.428L22.286 12V0zm14.571 11.143l-3.428 3.428h-3.429l-3 3v-3H6.857V1.714h13.714Z" fill="rgb(149, 157, 165)"/></svg>

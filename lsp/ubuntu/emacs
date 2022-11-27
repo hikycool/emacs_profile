@@ -174,8 +174,8 @@
 (require 'lsp-bridge)
 (global-lsp-bridge-mode)
 (setq lsp-bridge-c-lsp-server "ccls")
-;;(setq lsp-bridge-enable-log t)
-;;(setq lsp-bridge-enable-debug t)
+(setq lsp-bridge-enable-log t)
+(setq lsp-bridge-enable-debug t)
 ;;--------------------------------------------------
 
 ;;----------------------Tramp-----------------------
@@ -278,6 +278,7 @@
         ("C-x t C-t" . treemacs-find-file)
         ("C-x t M-t" . treemacs-find-tag)))
 
+(use-package treemacs-all-the-icons)
 (require 'treemacs-all-the-icons)
 (treemacs-load-theme "all-the-icons")
 
@@ -314,7 +315,6 @@
 (add-hook 'tree-sitter-after-on-hook #'tree-sitter-hl-mode)
 ;;-----------------------------------------------------------
 ;;--------------------- helm ag -----------------------------
-;; sudo apt-get install silversearcher-ag
 (use-package helm-ag
   :ensure t
   :bind
